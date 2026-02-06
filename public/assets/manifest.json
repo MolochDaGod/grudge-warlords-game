@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "models": {
+    "warrior": "/assets/models/characters/warrior.glb",
+    "mage": "/assets/models/characters/mage.glb",
+    "ranger": "/assets/models/characters/ranger.glb",
+    "worg": "/assets/models/characters/worg.glb",
+    "goblin": "/assets/models/enemies/goblin.glb",
+    "orc": "/assets/models/enemies/orc.glb",
+    "bandit": "/assets/models/enemies/bandit.glb",
+    "dragon": "/assets/models/enemies/dragon.glb",
+    "terrain_basic": "/assets/models/terrain/terrain_basic.glb",
+    "boat_small": "/assets/models/props/boat_small.glb"
+  },
+  "textures": {
+    "grass": "/assets/textures/grass.jpg",
+    "stone": "/assets/textures/stone.jpg",
+    "water": "/assets/textures/water.jpg",
+    "sky": "/assets/textures/sky.jpg"
+  },
+  "audio": {
+    "bgm_combat": "/assets/audio/combat.mp3",
+    "sfx_sword": "/assets/audio/sword.mp3"
+  }
+}

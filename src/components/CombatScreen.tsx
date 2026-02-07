@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { ZONES } from '../systems/enemies';
 import { SKILL_TREES } from '../data/skillTrees';
@@ -6,7 +5,6 @@ import { GameScene } from './3d';
 import './CombatScreen.css';
 
 export default function CombatScreen() {
-  const [show3D, setShow3D] = useState(true);
   const {
     character,
     enemies,
@@ -36,21 +34,12 @@ export default function CombatScreen() {
     endCombat(false);
   };
 
-  const classIcons: Record<string, string> = {
-    warrior: '⚔️',
-    mage: '🔮',
-    ranger: '🏹',
-    worg: '🐺'
-  };
-
   return (
     <div className="combat-screen-3d">
       {/* 3D Scene Background */}
-      {show3D && (
-        <div className="combat-scene-3d">
-          <GameScene mode="combat" />
-        </div>
-      )}
+      <div className="combat-scene-3d">
+        <GameScene mode="combat" />
+      </div>
 
       {/* UI Overlay */}
       <div className="combat-ui-overlay">

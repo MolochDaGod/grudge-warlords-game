@@ -56,24 +56,8 @@ export default function CombatScreen() {
       <div className="combat-ui-overlay">
         <div className="combat-header">
           <h1>⚔️ COMBAT - {zone?.name}</h1>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <p style={{ color: '#94a3b8', margin: 0 }}>
-              {enemies.length} {enemies.length === 1 ? 'enemy' : 'enemies'} remaining
-            </p>
-            <button
-              onClick={() => setShow3D(!show3D)}
-              style={{
-                padding: '4px 8px',
-                background: show3D ? '#8b5cf620' : '#1e1e2e',
-                border: '1px solid #334155',
-                borderRadius: '4px',
-                color: '#94a3b8',
-                fontSize: '0.75rem',
-                cursor: 'pointer'
-              }}
-            >
-              {show3D ? '2D Mode' : '3D Mode'}
-            </button>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', fontSize: '0.75rem', color: '#94a3b8' }}>
+            <span>{enemies.length} {enemies.length === 1 ? 'enemy' : 'enemies'}</span>
           </div>
         </div>
 
@@ -91,23 +75,16 @@ export default function CombatScreen() {
               <div className="combatant-name">{currentEnemy.name}</div>
               <div className="combatant-level">Level {currentEnemy.level} {currentEnemy.enemyType}</div>
 
-              <div style={{ marginBottom: '8px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <span>HP</span>
-                  <span>{currentEnemy.hp}/{currentEnemy.maxHp}</span>
-                </div>
-                <div className="progress-bar">
-                  <div 
-                    className="progress-bar-fill progress-bar-hp" 
-                    style={{ width: `${enemyHpPercent}%` }} 
-                  />
-                </div>
-              </div>
-
-              <div style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '16px' }}>
-                <div>Physical DMG: {currentEnemy.stats.physicalDamage}</div>
-                <div>Physical DEF: {currentEnemy.stats.physicalDefense}</div>
-              </div>
+          <div className="stat-text">
+            <span>HP</span>
+            <span>{currentEnemy.hp}/{currentEnemy.maxHp}</span>
+          </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-bar-fill progress-bar-hp" 
+              style={{ width: `${enemyHpPercent}%` }} 
+            />
+          </div>
             </>
           ) : (
             <div style={{ textAlign: 'center', padding: '40px' }}>
@@ -121,47 +98,36 @@ export default function CombatScreen() {
 
         {/* Player Side */}
         <div className="combatant-card player">
-          <div className="combatant-icon">{classIcons[character.classType] || '👤'}</div>
           <div className="combatant-name">{character.name}</div>
-          <div className="combatant-level">Level {character.level} {character.classType}</div>
+          <div className="combatant-level">Lv.{character.level} {character.classType}</div>
 
-          <div style={{ marginBottom: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span>HP</span>
-              <span>{playerCombatant.hp}/{playerCombatant.maxHp}</span>
-            </div>
-            <div className="progress-bar">
-              <div 
-                className="progress-bar-fill progress-bar-hp" 
-                style={{ width: `${playerHpPercent}%` }} 
-              />
-            </div>
+          <div className="stat-text">
+            <span>HP</span>
+            <span>{playerCombatant.hp}/{playerCombatant.maxHp}</span>
+          </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-bar-fill progress-bar-hp" 
+              style={{ width: `${playerHpPercent}%` }} 
+            />
           </div>
 
-          <div style={{ marginBottom: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span>Mana</span>
-              <span>{playerCombatant.mana}/{playerCombatant.maxMana}</span>
-            </div>
-            <div className="progress-bar">
-              <div 
-                className="progress-bar-fill progress-bar-mana" 
-                style={{ width: `${(playerCombatant.mana / playerCombatant.maxMana) * 100}%` }} 
-              />
-            </div>
+          <div className="stat-text">
+            <span>MP</span>
+            <span>{playerCombatant.mana}/{playerCombatant.maxMana}</span>
           </div>
-
-          <div style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '16px' }}>
-            <div>Physical DMG: {playerCombatant.stats.physicalDamage}</div>
-            <div>Crit Chance: {playerCombatant.stats.critChance}%</div>
+          <div className="progress-bar">
+            <div 
+              className="progress-bar-fill progress-bar-mana" 
+              style={{ width: `${(playerCombatant.mana / playerCombatant.maxMana) * 100}%` }} 
+            />
           </div>
         </div>
       </div>
 
       {/* Combat Log */}
       <div className="combat-log">
-        <h4 style={{ marginBottom: '12px', color: '#f59e0b' }}>Combat Log</h4>
-        {combatLog.slice(-10).map((entry, index) => (
+        {combatLog.slice(-8).map((entry, index) => (
           <div 
             key={index} 
             className={`combat-log-entry ${
@@ -177,8 +143,7 @@ export default function CombatScreen() {
       {/* Skills Bar */}
       {enemies.length > 0 && character && (
         <div className="skills-bar">
-          <h4 style={{ marginBottom: '8px', color: '#8b5cf6' }}>⚡ Skills</h4>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
             {SKILL_TREES[character.classType].skills
               .filter(skill => unlockedSkills.includes(skill.id) && skill.type !== 'passive')
               .map(skill => {
@@ -193,57 +158,32 @@ export default function CombatScreen() {
                     className={`skill-button ${canUse ? '' : 'disabled'}`}
                     onClick={() => canUse && useSkill(skill.id)}
                     disabled={!canUse}
-                    title={`${skill.description}\n${skill.manaCost ? `Mana: ${skill.manaCost}` : ''} ${skill.staminaCost ? `Stamina: ${skill.staminaCost}` : ''}\nCooldown: ${skill.cooldown}s`}
-                    style={{
-                      padding: '8px 12px',
-                      background: canUse ? '#8b5cf620' : '#1e1e2e',
-                      border: `2px solid ${canUse ? '#8b5cf6' : '#334155'}`,
-                      borderRadius: '8px',
-                      color: canUse ? '#fff' : '#64748b',
-                      cursor: canUse ? 'pointer' : 'not-allowed',
-                      position: 'relative',
-                      minWidth: '80px',
-                      textAlign: 'center'
-                    }}
+                    title={`${skill.name}\n${skill.description}\n${skill.manaCost ? `Mana: ${skill.manaCost}` : ''} ${skill.staminaCost ? `Stamina: ${skill.staminaCost}` : ''}\nCooldown: ${skill.cooldown}s`}
                   >
-                    <div style={{ fontSize: '1.25rem' }}>{skill.icon}</div>
-                    <div style={{ fontSize: '0.7rem', marginTop: '2px' }}>{skill.name}</div>
+                    <div style={{ fontSize: '1.5rem' }}>{skill.icon}</div>
                     {cooldown > 0 && (
                       <div style={{
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        background: 'rgba(0,0,0,0.8)',
+                        background: 'rgba(0,0,0,0.9)',
                         borderRadius: '50%',
-                        width: '28px',
-                        height: '28px',
+                        width: '24px',
+                        height: '24px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#f59e0b',
-                        fontWeight: 'bold'
+                        color: '#fbbf24',
+                        fontWeight: '700',
+                        fontSize: '0.75rem'
                       }}>
                         {cooldown}
                       </div>
                     )}
-                    {!canAffordMana && cooldown === 0 && (
-                      <div style={{ fontSize: '0.6rem', color: '#3b82f6' }}>No Mana</div>
-                    )}
-                    {!canAffordStamina && canAffordMana && cooldown === 0 && (
-                      <div style={{ fontSize: '0.6rem', color: '#22c55e' }}>No Stamina</div>
-                    )}
                   </button>
                 );
               })}
-            {unlockedSkills.filter(id => {
-              const skill = SKILL_TREES[character.classType].skills.find(s => s.id === id);
-              return skill && skill.type !== 'passive';
-            }).length === 0 && (
-              <div style={{ color: '#64748b', fontStyle: 'italic' }}>
-                No active skills learned. Visit Skills menu to unlock abilities!
-              </div>
-            )}
           </div>
         </div>
       )}

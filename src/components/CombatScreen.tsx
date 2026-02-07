@@ -3,6 +3,7 @@ import { useGameStore } from '../store/gameStore';
 import { ZONES } from '../systems/enemies';
 import { SKILL_TREES } from '../data/skillTrees';
 import { GameScene } from './3d';
+import './CombatScreen.css';
 
 export default function CombatScreen() {
   const [show3D, setShow3D] = useState(true);

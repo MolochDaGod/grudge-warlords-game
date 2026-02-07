@@ -27,7 +27,6 @@ class AssetManager {
   
   private loadedModels: Map<string, THREE.Group> = new Map();
   private loadedTextures: Map<string, THREE.Texture> = new Map();
-  private loadQueue: Array<() => Promise<void>> = [];
   
   private progressCallback?: (progress: LoadProgress) => void;
   private totalAssets = 0;
@@ -36,8 +35,6 @@ class AssetManager {
   
   // Performance optimization settings
   private maxTextureSize = 2048;
-  private enableDraco = true;
-  private enableKTX2 = false; // Set to true if you have KTX2 textures
 
   constructor() {
     // Initialize GLTF loader with DRACO compression support
@@ -90,7 +87,7 @@ class AssetManager {
    */
   private optimizeTexture(texture: THREE.Texture): THREE.Texture {
     // Limit texture size
-    if (texture.image) {
+    if (texture.image && texture.image instanceof HTMLImageElement) {
       const maxSize = this.maxTextureSize;
       if (texture.image.width > maxSize || texture.image.height > maxSize) {
         texture.image = this.resizeImage(texture.image, maxSize);
